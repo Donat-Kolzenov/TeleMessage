@@ -1,0 +1,144 @@
+﻿<Window x:Name="window" x:Class="Chat.DesktopClient.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="{Binding Title}" Height="450" Width="530" MinHeight="450" MinWidth="530">
+    <Window.Background>
+        <ImageBrush ImageSource="/Views/background.jpg"/>
+    </Window.Background>
+
+    <Grid>
+        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Label
+                x:Name="UsernameLabel"
+                FontSize="10"
+                Content="User name"
+                HorizontalAlignment="Center"
+                VerticalContentAlignment="Bottom"
+                HorizontalContentAlignment="Center"
+                Margin="0,0,445,-5"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox
+                    x:Name="UsernameTextBox"
+                    Height="30"
+                    Width="200"
+                    Text="{Binding Username}"
+                    VerticalContentAlignment="Center">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <Button
+                    x:Name="ConnectionButton"
+                    Height="30" 
+                    Width="100"
+                    Margin="200,0,0,0">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                                    <Setter Property="Content" Value="Connect"/>
+                                    <Setter Property="Command" Value="{Binding ConnectionCommand}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                    <Setter Property="Content" Value="Disconnect"/>
+                                    <Setter Property="Command" Value="{Binding DisconnectionCommand}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+
+            <Label
+                x:Name="TargetLabel"
+                FontSize="10"
+                Content="Send to"
+                HorizontalAlignment="Center"
+                VerticalContentAlignment="Bottom"
+                Margin="0,0,455,-5"/>
+
+            <StackPanel HorizontalAlignment="Center">
+                <TextBox
+                    x:Name="TargetTextBox"
+                    Height="30"
+                    Width="200"
+                    VerticalContentAlignment="Center"
+                    Margin="0,0,300,0">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+            </StackPanel>
+
+            <TextBlock
+                x:Name="OutputTextBlock"
+                Height="200"
+                Width="500"
+                Text="{Binding Output}"
+                HorizontalAlignment="Center"
+                Background="#F2FFFFFF"/>
+            <TextBox
+                x:Name="MessageTextBox"
+                Height="40" 
+                Width="500"
+                Text="{Binding Message}"
+                VerticalContentAlignment="Center">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <Button
+                x:Name="SendMessageButton"
+                Height="40"
+                Width="500"
+                Content="Send Message"
+                Command="{Binding SendMessageCommand}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
